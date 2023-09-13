@@ -1,16 +1,22 @@
 import 'Cidade.dart';
 
 class Endereco {
-  String nome;
-  String logradouro;
-  String numero;
-  String complemento;
-  String cep;
-  String bairro;
-  Cidade cidade;
+  String? nome;
+  String? logradouro;
+  String? numero;
+  String? complemento;
+  String? cep;
+  String? bairro;
+  Cidade? cidade;
 
-  Endereco(this.nome, this.logradouro, this.numero, this.complemento, this.cep,
-      this.bairro, this.cidade);
+  Endereco(
+      {this.nome,
+      this.logradouro,
+      this.numero,
+      this.complemento,
+      this.cep,
+      this.bairro,
+      this.cidade});
 
   @override
   String toString() {
@@ -18,7 +24,7 @@ class Endereco {
 
     endereco += '$logradouro, ';
 
-    endereco += numero;
+    endereco += numero?? '';
 
     endereco += complemento == '' ? '' : '$complemento, \n';
 

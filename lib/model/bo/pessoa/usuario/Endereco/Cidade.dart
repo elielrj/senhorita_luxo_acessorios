@@ -1,10 +1,10 @@
 import 'Estado.dart';
 
 class Cidade {
-  String nome;
-  Estado estado;
+  String? nome;
+  Estado? estado;
 
-  Cidade(this.nome, this.estado);
+  Cidade({this.nome, this.estado});
 
   @override
   String toString() {

@@ -1,8 +1,8 @@
 class Estado {
-  String nome;
-  String sigla;
+  String? nome;
+  String? sigla;
 
-  Estado(this.nome, this.sigla);
+  Estado({this.nome, this.sigla});
 
   @override
   String toString() {

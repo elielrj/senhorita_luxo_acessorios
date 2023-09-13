@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:senhorita_luxo_acessorios/configuracoes.dart';
-import 'package:senhorita_luxo_acessorios/senhorita_luxo_acessorios.dart';
+import 'package:senhorita_luxo_acessorios/common/colors.dart';
+import 'package:senhorita_luxo_acessorios/common/images.dart';
+import 'package:senhorita_luxo_acessorios/view/senhorita_luxo_acessorios.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -27,19 +28,19 @@ class _SplashState extends State<Splash> {
       body: Center(
         child: Container(
           alignment: Alignment.center,
-          color: Configuracoes.COLOR_PRINCIPAL_SL,
+          color: COLOR_PRINCIPAL_SL,
           padding: const EdgeInsets.all(60),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'imagens/sl-acessorios/fundo-rosa-letras-brancas-logo.png',
+                FUNDO_ROSA_LETRAS_BRANCAS_NO_LOGO,
                 width: 270,
                 height: 270,
               ),
               Image.asset(
-                'imagens/um-acessorio-muda-tudo/um-acessorio-muda-tudo-verde-logo.png',
+                UM_ACESSORIO_MUDA_TUDO_VERDE_LOGO,
                 width: 200,
                 height: 200,
               ),
