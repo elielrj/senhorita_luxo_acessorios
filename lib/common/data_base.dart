@@ -1,0 +1,1 @@
+const BODY_TOPY = 'body-top';
