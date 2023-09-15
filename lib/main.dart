@@ -1,14 +1,19 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:senhorita_luxo_acessorios/library/inicializar_firebase_no_app.dart';
-import 'package:senhorita_luxo_acessorios/view/splash.dart';
+import 'package:senhorita_luxo_acessorios/home.dart';
+import 'firebase_options.dart';
 
 void main() async {
-  await inicializarFirebaseNoApp();
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(
     const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Splash(),
+      home: Home(),
     ),
   );
 }
