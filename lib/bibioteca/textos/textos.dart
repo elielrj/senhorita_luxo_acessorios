@@ -19,3 +19,10 @@ const textoProduto = 'Produto';
 const textoAdicionarProduto = 'Adicionar Produto';
 
 const textoCategorias = 'CATEGORIAS';
+
+const textoNomeDoProduto = 'Produto';
+const textoCodigoDoProduto = 'Código';
+const textoEstoqueQuantidadeDoProduto = 'Quantidade';
+const textoEstoqueValorDeAquisicaoDoProduto = 'Valor De Aquisicao';
+const textoEstoqueValorDeVencaDoProduto = 'Valor De Venda';
+const textoErroAoBuscarImagem = 'Erro ao tentar buscar imagem!';

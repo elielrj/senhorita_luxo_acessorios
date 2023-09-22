@@ -8,9 +8,9 @@ import 'Estoque.dart';
 import 'Visualizacao.dart';
 
 class Produto {
-  final String? codigo;
+   final String? codigo;
   final Estoque? estoque;
-  final String? nome;
+   final String? nome;
   final List<Avaliacao>? listaDeAvaliacoes;
   final List<Arquivo>? listaDeArquivos;
   final List<Categoria>? listaDeCategorias;

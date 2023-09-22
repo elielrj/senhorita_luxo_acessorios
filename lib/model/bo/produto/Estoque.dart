@@ -1,8 +1,8 @@
 
 class Estoque {
-  int? quantidade;
-  double? valorDeAquisicao;
-  double? valorDeVenda;
+  late int? quantidade;
+  late double? valorDeAquisicao;
+  late double? valorDeVenda;
 
   Estoque({this.quantidade, this.valorDeAquisicao, this.valorDeVenda});
 
