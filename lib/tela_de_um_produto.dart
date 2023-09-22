@@ -93,6 +93,13 @@ class _TelaDeUmProdutoState extends State<TelaDeUmProduto> {
             child: Text("$textoCodigo ${widget.produto.codigo!}",
                 style: const TextStyle(fontSize: 10, color: Colors.black45)),
           ),
+          Padding(
+            padding: const EdgeInsets.only(top: 5),
+            child: Text(
+              "R\$ ${widget.produto.estoque!.valorDeVenda.toString()}",
+              style: const TextStyle(color: Colors.black),
+            ),
+          )
         ],
       ),
     );
