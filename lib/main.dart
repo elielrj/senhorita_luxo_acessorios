@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:senhorita_luxo_acessorios/home.dart';
+import 'package:senhorita_luxo_acessorios/tela_home.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -13,7 +13,7 @@ void main() async {
   runApp(
     const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Home(),
+      home: TelaHome(),
     ),
   );
 }
