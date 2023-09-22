@@ -17,3 +17,5 @@ const textoMeuCarrinho = 'Meu Carrinho';
 const textoProduto = 'Produto';
 
 const textoAdicionarProduto = 'Adicionar Produto';
+
+const textoCategorias = 'CATEGORIAS';

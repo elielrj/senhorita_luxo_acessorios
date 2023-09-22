@@ -17,10 +17,17 @@ class _TelaHomeState extends State<TelaHome> {
     return Scaffold(
       backgroundColor: corRosaPrincipalDaSenhoritaLuxoAcessorios,
       appBar: AppBar(
-        title: const Text(textoSenhoritaLuxoAcessorios),
+        title: const Text(
+          textoSenhoritaLuxoAcessorios,
+          style: TextStyle(
+              color: corVerdeClaroSecundAriaDaSenhoritaLuxoAcessorios),
+        ),
         leading: Builder(builder: (context) {
           return IconButton(
-            icon: const Icon(Icons.menu),
+            icon: const Icon(
+              Icons.menu,
+              color: corVerdeClaroSecundAriaDaSenhoritaLuxoAcessorios,
+            ),
             onPressed: () {
               Scaffold.of(context).openDrawer();
             },
@@ -29,7 +36,10 @@ class _TelaHomeState extends State<TelaHome> {
         }),
         actions: [
           IconButton(
-            icon: const Icon(Icons.shopping_cart),
+            icon: const Icon(
+              Icons.shopping_cart,
+              color: corVerdeClaroSecundAriaDaSenhoritaLuxoAcessorios,
+            ),
             tooltip: textoMeuCarrinho,
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -37,7 +47,10 @@ class _TelaHomeState extends State<TelaHome> {
             },
           ),
           IconButton(
-            icon: const Icon(Icons.settings),
+            icon: const Icon(
+              Icons.settings,
+              color: corVerdeClaroSecundAriaDaSenhoritaLuxoAcessorios,
+            ),
             tooltip: textoConfiguracoes,
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -71,38 +84,29 @@ class _TelaHomeState extends State<TelaHome> {
         ),
       ),
       drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
+        backgroundColor: corVerdeClaroSecundAriaDaSenhoritaLuxoAcessorios,
         child: ListView(
-          // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: [
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: corRosaPrincipalDaSenhoritaLuxoAcessorios,
               ),
-              child: Text('Drawer Header'),
+              child: Text(textoCategorias),
             ),
             ListTile(
-              title: TextButton(
-                child: const Row(children: [
-                  Icon(Icons.add),
-                  Text(textoProduto),
-                ]),
-                onPressed: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const TelaAdicionarProduto())),
-              ),
+              title: const Row(children: [
+                Icon(Icons.add, color: Colors.black),
+                Text(
+                  textoProduto,
+                  style: TextStyle(color: Colors.black, fontSize: 16),
+                ),
+              ]),
               onTap: () {
-                // Update the state of the app.
-                // ...
-              },
-            ),
-            ListTile(
-              title: const Text('Item 2'),
-              onTap: () {
-                // Update the state of the app.
-                // ...
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const TelaAdicionarProduto()));
               },
             ),
           ],

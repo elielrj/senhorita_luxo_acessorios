@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:senhorita_luxo_acessorios/bibioteca/cores/cores.dart';
 import 'package:senhorita_luxo_acessorios/bibioteca/textos/textos.dart';
 
 class TelaAdicionarProduto extends StatefulWidget {
@@ -14,6 +15,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(textoAdicionarProduto),
+        backgroundColor: corRosaPrincipalDaSenhoritaLuxoAcessorios,
       ),
       body: const Center(
         child: Text('Tela Adicionar Produto'),
