@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:senhorita_luxo_acessorios/bibioteca/cores/cores.dart';
 import 'package:senhorita_luxo_acessorios/model/bo/produto/Produto.dart';
 import 'package:senhorita_luxo_acessorios/tela_de_um_produto.dart';
 
@@ -35,13 +36,23 @@ class _TelaDeProdutosState extends State<TelaDeProdutos> {
                 child: Text(textoDeErroAoAtivarConexao),
               );
             } else if (snapshot.hasData) {
-              return Expanded(
-                child: ListView(
+              return Container(
+                //width: MediaQuery.of(context).size.width * 0.85,
+                //height: 700,
+                color: Colors.yellow,
+                child: Wrap(
+                  alignment: WrapAlignment.center,
+                  runSpacing: 10,
+                  spacing: 10,
                   children: snapshot.data!.docs
                       .map((DocumentSnapshot document) {
                         Map<String, dynamic> data =
                             document.data()! as Map<String, dynamic>;
-                        return TelaDeUmProduto(produto: Produto.fromMap(data));
+                        return Container(
+                          color: Colors.deepOrangeAccent,
+                            height: 300,
+                            width: 150,
+                            child: TelaDeUmProduto(produto: Produto.fromMap(data)));
                       })
                       .toList()
                       .cast(),

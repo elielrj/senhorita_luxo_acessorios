@@ -31,45 +31,37 @@ class _TelaDeUmProdutoState extends State<TelaDeUmProduto> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          widget.produto.listaDeArquivos is Iterable
-              ? SizedBox(
-                  width: 120,
-                  height: 170,
-                  child: Stack(
-                    children: [
-                      PageView(
+      title: Container(
+        child: widget.produto.listaDeArquivos is Iterable
+            ? SizedBox(
+                width: 120,
+                height: 170,
+                child: Stack(
+                  children: [
+                    PageView(
+                      controller: _controller,
+                      children: [
+                        for (Arquivo arquivo in widget.produto.listaDeArquivos!)
+                          Image.asset(
+                            arquivo.path.toString(),
+                            // width: 60,
+                            // height: 100,
+                          )
+                      ],
+                    ),
+                    Container(
+                      //width: 60,
+                      // height: 100,
+                      alignment: const Alignment(0, 0.75),
+                      child: SmoothPageIndicator(
                         controller: _controller,
-                        children: [
-                          for (Arquivo arquivo
-                              in widget.produto.listaDeArquivos!)
-                            Image.asset(
-                              arquivo.path.toString(),
-                              // width: 60,
-                              // height: 100,
-                            )
-                        ],
+                        count: widget.produto.listaDeArquivos!.length,
+                        onDotClicked: (index) => _controller.jumpToPage(index),
                       ),
-                      Container(
-                        //width: 60,
-                        // height: 100,
-                        alignment: const Alignment(0, 0.75),
-                        child: SmoothPageIndicator(
-                          controller: _controller,
-                          count: widget.produto.listaDeArquivos!.length,
-                          onDotClicked: (index) =>
-                              _controller.jumpToPage(index),
-                        ),
-                      ),
-                    ],
-                  ))
-              : Container(
-                  width: 0,
-                ),
-        ],
+                    ),
+                  ],
+                ))
+            : Container(width: 0),
       ),
       subtitle: Column(
         children: [

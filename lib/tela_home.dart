@@ -16,29 +16,25 @@ class _TelaHomeState extends State<TelaHome> {
       backgroundColor: corRosaPrincipalDaSenhoritaLuxoAcessorios,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Padding(
-            padding: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width * 0.10 / 4,
-              right: MediaQuery.of(context).size.width * 0.10 / 4,
-              top: 16,
-              bottom: 8,
+          SizedBox(
+            width: double.infinity,
+            height: 200,
+            child: Container(color: Colors.blue),
+          ),
+          SizedBox(
+            width: double.infinity,
+            height: 400,
+            child: Container(
+              color: Colors.brown,
+              child:  SingleChildScrollView(child: TelaDeProdutos()),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.90,
-                  //height: 300,
-                  child: Container(
-                    color: corVerdeClaroSecundAriaDaSenhoritaLuxoAcessorios,
-                    child: const TelaDeProdutos(),
-                  ),
-                ),
-              ],
-            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            height: 100,
+            child: Container(color: Colors.green),
           ),
         ],
       ),
