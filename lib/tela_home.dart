@@ -26,7 +26,7 @@ class _TelaHomeState extends State<TelaHome> {
             ),
             const SizedBox(
               width: double.infinity,
-              height: 400,
+              height: 600,
               child: SingleChildScrollView(child: TelaDeProdutos()),
             ),
             SizedBox(
