@@ -93,6 +93,9 @@ flutter:
     - imagens/carrocel/shopping1.png
     - imagens/carrocel/shopping2.png
     - imagens/carrocel/shopping3.png
+    #temp
+    - imagens/brincos/brinco.png
+    - imagens/brincos/brinco2.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
