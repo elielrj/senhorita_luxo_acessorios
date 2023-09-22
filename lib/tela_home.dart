@@ -16,7 +16,7 @@ class _TelaHomeState extends State<TelaHome> {
       backgroundColor: corRosaPrincipalDaSenhoritaLuxoAcessorios,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
             padding:

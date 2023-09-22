@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:senhorita_luxo_acessorios/bibioteca/textos/textos.dart';
 import 'package:senhorita_luxo_acessorios/model/bo/produto/Arquivo.dart';
 import 'package:senhorita_luxo_acessorios/model/bo/produto/Produto.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -32,10 +33,8 @@ class _TelaDeUmProdutoState extends State<TelaDeUmProduto> {
     return ListTile(
       title: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(widget.produto.nome!),
-          Text(widget.produto.estoque!.quantidade!.toString()),
           widget.produto.listaDeArquivos is Iterable
               ? SizedBox(
                   width: 120,
@@ -72,7 +71,29 @@ class _TelaDeUmProdutoState extends State<TelaDeUmProduto> {
                 ),
         ],
       ),
-      subtitle: Text(widget.produto.codigo!),
+      subtitle: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 5),
+            child: Text(
+              widget.produto.nome!,
+              style: const TextStyle(color: Colors.black),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 5),
+            child: Text(
+              "$textpQuantidade ${widget.produto.estoque!.quantidade!.toString()}",
+              style: const TextStyle(color: Colors.black),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 5),
+            child: Text("$textoCodigo ${widget.produto.codigo!}",
+                style: const TextStyle(fontSize: 10, color: Colors.black45)),
+          ),
+        ],
+      ),
     );
   }
 }

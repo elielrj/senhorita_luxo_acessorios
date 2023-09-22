@@ -7,3 +7,7 @@ const textoDeErroDesconhecidoAoAtivarConexao = 'Erro desconhecido';
 const textoDeErroDeConexaoFinalizada = 'Erro ao tentar localizar os produtos.';
 
 const textoStreamBuilderBuscando = 'Buscando Produtos...';
+
+const textoCodigo = 'Codigo';
+
+const textpQuantidade = 'Quantidade';
