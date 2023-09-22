@@ -19,15 +19,25 @@ class _TelaHomeState extends State<TelaHome> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
-            padding:
-                EdgeInsets.all(MediaQuery.of(context).size.width * 0.10 / 4),
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.40,
-              height: 300,
-              child: Container(
-                color: corVerdeClaroSecundAriaDaSenhoritaLuxoAcessorios,
-                child: const TelaDeProdutos(),
-              ),
+            padding: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width * 0.10 / 4,
+              right: MediaQuery.of(context).size.width * 0.10 / 4,
+              top: 16,
+              bottom: 8,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.90,
+                  //height: 300,
+                  child: Container(
+                    color: corVerdeClaroSecundAriaDaSenhoritaLuxoAcessorios,
+                    child: const TelaDeProdutos(),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
