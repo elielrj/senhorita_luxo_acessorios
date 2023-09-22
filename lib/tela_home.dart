@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:senhorita_luxo_acessorios/bibioteca/cores/cores.dart';
 import 'package:senhorita_luxo_acessorios/bibioteca/textos/textos.dart';
+import 'package:senhorita_luxo_acessorios/tela_adicionar_produto.dart';
 import 'package:senhorita_luxo_acessorios/tela_de_produtos.dart';
 
 class TelaHome extends StatefulWidget {
@@ -65,6 +66,44 @@ class _TelaHomeState extends State<TelaHome> {
               width: double.infinity,
               height: 100,
               child: Container(color: Colors.green),
+            ),
+          ],
+        ),
+      ),
+      drawer: Drawer(
+        // Add a ListView to the drawer. This ensures the user can scroll
+        // through the options in the drawer if there isn't enough vertical
+        // space to fit everything.
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text('Drawer Header'),
+            ),
+            ListTile(
+              title: TextButton(
+                child: const Row(children: [
+                  Icon(Icons.add),
+                  Text(textoProduto),
+                ]),
+                onPressed: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const TelaAdicionarProduto())),
+              ),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+            ListTile(
+              title: const Text('Item 2'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
             ),
           ],
         ),

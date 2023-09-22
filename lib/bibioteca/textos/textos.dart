@@ -14,3 +14,6 @@ const textpQuantidade = 'Quantidade';
 
 const textoConfiguracoes = 'Configurações';
 const textoMeuCarrinho = 'Meu Carrinho';
+const textoProduto = 'Produto';
+
+const textoAdicionarProduto = 'Adicionar Produto';
