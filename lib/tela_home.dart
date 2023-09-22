@@ -14,29 +14,28 @@ class _TelaHomeState extends State<TelaHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: corRosaPrincipalDaSenhoritaLuxoAcessorios,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: double.infinity,
-            height: 200,
-            child: Container(color: Colors.blue),
-          ),
-          SizedBox(
-            width: double.infinity,
-            height: 400,
-            child: Container(
-              color: Colors.brown,
-              child:  SingleChildScrollView(child: TelaDeProdutos()),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: double.infinity,
+              height: 200,
+              child: Container(color: Colors.blue),
             ),
-          ),
-          SizedBox(
-            width: double.infinity,
-            height: 100,
-            child: Container(color: Colors.green),
-          ),
-        ],
+            const SizedBox(
+              width: double.infinity,
+              height: 400,
+              child: SingleChildScrollView(child: TelaDeProdutos()),
+            ),
+            SizedBox(
+              width: double.infinity,
+              height: 100,
+              child: Container(color: Colors.green),
+            ),
+          ],
+        ),
       ),
     );
   }

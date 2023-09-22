@@ -36,12 +36,11 @@ class _TelaDeProdutosState extends State<TelaDeProdutos> {
                 child: Text(textoDeErroAoAtivarConexao),
               );
             } else if (snapshot.hasData) {
-              return Container(
-                //width: MediaQuery.of(context).size.width * 0.85,
-                //height: 700,
-                color: Colors.yellow,
+              return Padding(
+                padding: const EdgeInsets.only(
+                    top: 16.0, left: 8, right: 8, bottom: 32),
                 child: Wrap(
-                  alignment: WrapAlignment.center,
+                  alignment: WrapAlignment.spaceAround,
                   runSpacing: 10,
                   spacing: 10,
                   children: snapshot.data!.docs
@@ -49,10 +48,12 @@ class _TelaDeProdutosState extends State<TelaDeProdutos> {
                         Map<String, dynamic> data =
                             document.data()! as Map<String, dynamic>;
                         return Container(
-                          color: Colors.deepOrangeAccent,
+                            color:
+                                corVerdeClaroSecundAriaDaSenhoritaLuxoAcessorios,
                             height: 300,
-                            width: 150,
-                            child: TelaDeUmProduto(produto: Produto.fromMap(data)));
+                            width: 180,
+                            child: TelaDeUmProduto(
+                                produto: Produto.fromMap(data)));
                       })
                       .toList()
                       .cast(),
