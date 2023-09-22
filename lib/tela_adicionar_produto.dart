@@ -1,10 +1,14 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:senhorita_luxo_acessorios/bibioteca/cores/cores.dart';
 import 'package:senhorita_luxo_acessorios/bibioteca/textos/textos.dart';
+import 'package:senhorita_luxo_acessorios/model/bo/produto/Arquivo.dart';
+import 'package:senhorita_luxo_acessorios/model/bo/produto/Estoque.dart';
 import 'package:senhorita_luxo_acessorios/model/bo/produto/Produto.dart';
 
 class TelaAdicionarProduto extends StatefulWidget {
@@ -115,7 +119,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                 ),
               ),
             ),
-
+            //06 - Capturas de Imagens
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -200,23 +204,105 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            for (XFile xFile in _imagensDoProduto)
-                              Padding(
+                        child: _imagensDoProduto.isEmpty
+                            ? Padding(
                                 padding: const EdgeInsets.only(bottom: 8.0),
-                                child: Image.file(File(xFile.path)),
+                                child: Container(
+                                    color: Colors.black26,
+                                    child: const SizedBox(height: 300)),
                               )
-                          ],
-                        ),
+                            : Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  for (XFile xFile in _imagensDoProduto)
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 8.0),
+                                      child: Image.file(File(xFile.path)),
+                                    )
+                                ],
+                              ),
                       )
                     ],
                   ),
                 ],
               ),
-            )
+            ),
+            //Botões de Enviar e Cancelar
+            Padding(
+              padding: const EdgeInsets.only(
+                  top: 8.0, bottom: 32, right: 8, left: 8),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      //Botão Enviar
+                      Expanded(
+                        child: TextButton(
+                            style: TextButton.styleFrom(
+                              foregroundColor: Colors.black,
+                              backgroundColor: Colors.blueGrey,
+                              padding: const EdgeInsets.all(16),
+                              textStyle: const TextStyle(fontSize: 20),
+                            ),
+                            onPressed: () async {
+                              final produto = Produto(
+                                nome: _controllerNome.text,
+                                codigo: _controllerCodigo.text,
+                                estoque: Estoque(
+                                  quantidade: int.tryParse(
+                                          _controllerEstoqueQuantidade.text
+                                              .toString()) ??
+                                      0,
+                                  valorDeAquisicao: double.tryParse(
+                                          _controllerEstoqueValorDeAquisicao
+                                              .text
+                                              .toString()) ??
+                                      0,
+                                  valorDeVenda: double.tryParse(
+                                          _controllerEstoqueValorDeVenda.text
+                                              .toString()) ??
+                                      0,
+                                ),
+                                listaDeArquivos: _imagensDoProduto
+                                    .map((XFile xFile) {
+                                      Map<String, dynamic> data =
+                                          xFile as Map<String, dynamic>;
+                                      return Arquivo.fromMap(data);
+                                    })
+                                    .toList()
+                                    .cast(),
+                              );
+
+                              try {
+                                //FirebaseStorage.instance.ref('produtos').child() todo
+                              } catch (e) {}
+                            },
+                            child: const Text(textoEnviar)),
+                      ),
+                      const SizedBox(width: 8),
+                      //Botão Cancelar
+                      Expanded(
+                        child: TextButton(
+                            style: TextButton.styleFrom(
+                              foregroundColor: Colors.black,
+                              backgroundColor: Colors.blueGrey,
+                              padding: const EdgeInsets.all(16),
+                              textStyle: const TextStyle(fontSize: 20),
+                            ),
+                            onPressed: () async {
+                              try {} catch (e) {}
+                            },
+                            child: const Text(textoCancelar)),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

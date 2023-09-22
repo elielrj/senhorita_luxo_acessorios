@@ -26,3 +26,6 @@ const textoEstoqueQuantidadeDoProduto = 'Quantidade';
 const textoEstoqueValorDeAquisicaoDoProduto = 'Valor De Aquisicao';
 const textoEstoqueValorDeVencaDoProduto = 'Valor De Venda';
 const textoErroAoBuscarImagem = 'Erro ao tentar buscar imagem!';
+
+const textoEnviar = 'Enviar';
+const textoCancelar = 'Cancelar';
