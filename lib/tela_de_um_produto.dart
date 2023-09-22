@@ -76,7 +76,8 @@ class _TelaDeUmProdutoState extends State<TelaDeUmProduto> {
           Padding(
             padding: const EdgeInsets.only(top: 5),
             child: Text(
-              widget.produto.nome!,
+              widget.produto.nome!.toString()[0].toUpperCase() +
+                  widget.produto.nome!.toString().substring(1).toLowerCase(),
               style: const TextStyle(color: Colors.black),
             ),
           ),

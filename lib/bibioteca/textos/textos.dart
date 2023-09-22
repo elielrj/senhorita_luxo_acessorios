@@ -8,6 +8,6 @@ const textoDeErroDeConexaoFinalizada = 'Erro ao tentar localizar os produtos.';
 
 const textoStreamBuilderBuscando = 'Buscando Produtos...';
 
-const textoCodigo = 'Codigo';
+const textoCodigo = 'Código';
 
 const textpQuantidade = 'Quantidade';
