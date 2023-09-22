@@ -7,9 +7,15 @@ class Arquivo{
 
   String? nome;
   DateTime? dataHoraUpload;
-  DocumentReference? path;
+  String? path;//todo mudar para DocumentReference
 
   Arquivo({this.nome, this.dataHoraUpload, this.path});
 
-
+factory Arquivo.fromMap(Map<String, dynamic>? map){
+  return Arquivo(
+    nome: map?['nome'],
+    dataHoraUpload: (map?['data_hora_upload'] as Timestamp).toDate(),
+    path: map?['path'],
+  );
+  }
 }
