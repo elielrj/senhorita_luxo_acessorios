@@ -48,6 +48,9 @@ class _TelaDeProdutosState extends State<TelaDeProdutos> {
                         Map<String, dynamic> data =
                             document.data()! as Map<String, dynamic>;
                         return Container(
+                            alignment: Alignment.center,
+                            padding: const EdgeInsets.only(
+                                top: 8, left: 5, right: 5, bottom: 3),
                             color:
                                 corVerdeClaroSecundAriaDaSenhoritaLuxoAcessorios,
                             height: 300,
