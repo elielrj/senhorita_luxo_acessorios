@@ -1,11 +1,17 @@
+import 'dart:ffi';
 
-
-class Estoque{
-
+class Estoque {
   int? quantidade;
   double? valorDeAquisicao;
   double? valorDeVenda;
 
   Estoque({this.quantidade, this.valorDeAquisicao, this.valorDeVenda});
 
+  factory Estoque.fromMap(Map<String, dynamic>? map) {
+    return Estoque(
+      quantidade: map?['quantidade'],
+      valorDeAquisicao: map?['valor_de_aquisicao'],
+      valorDeVenda: map?['valor_de_venda'],
+    );
+  }
 }
