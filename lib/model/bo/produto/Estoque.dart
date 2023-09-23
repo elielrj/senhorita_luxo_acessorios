@@ -1,4 +1,3 @@
-
 class Estoque {
   late int? quantidade;
   late double? valorDeAquisicao;
@@ -12,5 +11,13 @@ class Estoque {
       valorDeAquisicao: map?['valor_de_aquisicao'],
       valorDeVenda: map?['valor_de_venda'],
     );
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      'quantidade': quantidade,
+      'valor_de_aquisicao': valorDeAquisicao,
+      'valor_de_venda': valorDeVenda,
+    };
   }
 }

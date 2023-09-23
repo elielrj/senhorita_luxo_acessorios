@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:senhorita_luxo_acessorios/bibioteca/cores/cores.dart';
 import 'package:senhorita_luxo_acessorios/bibioteca/textos/textos.dart';
-import 'package:senhorita_luxo_acessorios/model/bo/produto/Arquivo.dart';
 import 'package:senhorita_luxo_acessorios/model/bo/produto/Estoque.dart';
 import 'package:senhorita_luxo_acessorios/model/bo/produto/Produto.dart';
 
@@ -267,19 +266,40 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                                               .toString()) ??
                                       0,
                                 ),
-                                listaDeArquivos: _imagensDoProduto
-                                    .map((XFile xFile) {
-                                      Map<String, dynamic> data =
-                                          xFile as Map<String, dynamic>;
-                                      return Arquivo.fromMap(data);
-                                    })
-                                    .toList()
-                                    .cast(),
                               );
 
+                              final listaDeStringsComNomesDosArquivos =
+                                  <String>[];
+
                               try {
-                                //FirebaseStorage.instance.ref('produtos').child() todo
-                              } catch (e) {}
+                                for (XFile xFile in _imagensDoProduto) {
+                                  String nome = Timestamp.now()
+                                      .microsecondsSinceEpoch
+                                      .toString();
+
+                                  listaDeStringsComNomesDosArquivos.add(nome);
+
+                                  final storegeRef = FirebaseStorage.instance
+                                      .ref()
+                                      .child('produtos')
+                                      .child(produto.codigo.toString())
+                                      .child('$nome.png');
+
+                                  await storegeRef.putFile(File(xFile.path));
+                                }
+
+                                produto.listaDeArquivos = listaDeStringsComNomesDosArquivos;
+                                await FirebaseFirestore.instance
+                                    .collection('produtos')
+                                    .doc(produto.codigo)
+                                    .set(produto.toFirestore())
+                                    .onError((error, _) => debugPrint(
+                                        'Error writing document Produto: $error'))
+                                    .then((value) =>
+                                        debugPrint('Sucesso ao enviar dados!'));
+                              } catch (e) {
+                                debugPrint(e.toString());
+                              }
                             },
                             child: const Text(textoEnviar)),
                       ),

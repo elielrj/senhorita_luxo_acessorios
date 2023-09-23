@@ -1,7 +1,8 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:senhorita_luxo_acessorios/bibioteca/textos/textos.dart';
-import 'package:senhorita_luxo_acessorios/model/bo/produto/Arquivo.dart';
 import 'package:senhorita_luxo_acessorios/model/bo/produto/Produto.dart';
+import 'package:senhorita_luxo_acessorios/tela_imagem.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class TelaDeUmProduto extends StatefulWidget {
@@ -41,12 +42,8 @@ class _TelaDeUmProdutoState extends State<TelaDeUmProduto> {
                     PageView(
                       controller: _controller,
                       children: [
-                        for (Arquivo arquivo in widget.produto.listaDeArquivos!)
-                          Image.asset(
-                            arquivo.path.toString(),
-                            // width: 60,
-                            // height: 100,
-                          )
+                        for (String nome in widget.produto.listaDeArquivos!)
+                          TelaImagem(codigo: widget.produto.codigo!, nome: nome)
                       ],
                     ),
                     Container(
