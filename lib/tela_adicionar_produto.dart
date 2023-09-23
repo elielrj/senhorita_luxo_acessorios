@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,6 +11,7 @@ import 'package:senhorita_luxo_acessorios/bibioteca/cores/cores.dart';
 import 'package:senhorita_luxo_acessorios/bibioteca/textos/textos.dart';
 import 'package:senhorita_luxo_acessorios/model/bo/produto/Estoque.dart';
 import 'package:senhorita_luxo_acessorios/model/bo/produto/Produto.dart';
+import 'package:senhorita_luxo_acessorios/tela_home.dart';
 
 class TelaAdicionarProduto extends StatefulWidget {
   const TelaAdicionarProduto({super.key});
@@ -19,7 +22,8 @@ class TelaAdicionarProduto extends StatefulWidget {
 
 class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
   final _controllerNome = TextEditingController();
-  final _controllerCodigo = TextEditingController();
+  final _controllerCodigo = TextEditingController(
+      text: Timestamp.now().microsecondsSinceEpoch.toString());
   final _controllerEstoqueQuantidade = TextEditingController();
   final _controllerEstoqueValorDeAquisicao = TextEditingController();
   final _controllerEstoqueValorDeVenda = TextEditingController();
@@ -59,6 +63,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
               padding: const EdgeInsets.only(left: 8, right: 8),
               child: TextField(
                 controller: _controllerCodigo,
+                enabled: false,
                 keyboardType: TextInputType.number,
                 decoration:
                     const InputDecoration(labelText: textoCodigoDoProduto),
@@ -218,7 +223,9 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                                     Padding(
                                       padding:
                                           const EdgeInsets.only(bottom: 8.0),
-                                      child: Image.file(File(xFile.path)),
+                                      child: kIsWeb
+                                          ? Image.network(xFile.path)
+                                          : Image.file(File(xFile.path)),
                                     )
                                 ],
                               ),
@@ -285,10 +292,15 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                                       .child(produto.codigo.toString())
                                       .child('$nome.png');
 
-                                  await storegeRef.putFile(File(xFile.path));
+                                  kIsWeb
+                                      ? await storegeRef
+                                          .putData(await xFile.readAsBytes())
+                                      : await storegeRef
+                                          .putFile(File(xFile.path));
                                 }
 
-                                produto.listaDeArquivos = listaDeStringsComNomesDosArquivos;
+                                produto.listaDeArquivos =
+                                    listaDeStringsComNomesDosArquivos;
                                 await FirebaseFirestore.instance
                                     .collection('produtos')
                                     .doc(produto.codigo)
@@ -297,6 +309,12 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                                         'Error writing document Produto: $error'))
                                     .then((value) =>
                                         debugPrint('Sucesso ao enviar dados!'));
+                                // ignore: use_build_context_synchronously
+                                Navigator.pop(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const TelaHome()));
                               } catch (e) {
                                 debugPrint(e.toString());
                               }

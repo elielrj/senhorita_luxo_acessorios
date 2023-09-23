@@ -23,6 +23,7 @@ class _TelaImagemState extends State<TelaImagem> {
         .child(widget.codigo)
         .child('${widget.nome}.png')
         .getDownloadURL();
+
     debugPrint('URL: $url');
     setState(() {
       imagemUrl = url;
@@ -41,6 +42,7 @@ class _TelaImagemState extends State<TelaImagem> {
         ? Container(
             color: Colors.grey,
           )
+        //: Image.network(imagemUrl!);
         : Image.network(imagemUrl!);
   }
 }
