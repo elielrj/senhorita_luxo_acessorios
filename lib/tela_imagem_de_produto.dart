@@ -3,17 +3,17 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
-class TelaImagem extends StatefulWidget {
-  const TelaImagem({super.key, required this.codigo, required this.nome});
+class TelaImagemDeProduto extends StatefulWidget {
+  const TelaImagemDeProduto({super.key, required this.codigo, required this.nome});
 
   final String codigo;
   final String nome;
 
   @override
-  State<TelaImagem> createState() => _TelaImagemState();
+  State<TelaImagemDeProduto> createState() => _TelaImagemDeProdutoState();
 }
 
-class _TelaImagemState extends State<TelaImagem> {
+class _TelaImagemDeProdutoState extends State<TelaImagemDeProduto> {
   String? imagemUrl;
 
   Future<void> buscarImagem() async {

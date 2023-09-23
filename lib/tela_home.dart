@@ -3,6 +3,7 @@ import 'package:senhorita_luxo_acessorios/bibioteca/cores/cores.dart';
 import 'package:senhorita_luxo_acessorios/bibioteca/textos/textos.dart';
 import 'package:senhorita_luxo_acessorios/tela_adicionar_produto.dart';
 import 'package:senhorita_luxo_acessorios/tela_de_produtos.dart';
+import 'package:senhorita_luxo_acessorios/tela_imagem_card_top.dart';
 
 class TelaHome extends StatefulWidget {
   const TelaHome({super.key});
@@ -68,7 +69,9 @@ class _TelaHomeState extends State<TelaHome> {
             SizedBox(
               width: double.infinity,
               height: 200,
-              child: Container(color: Colors.blue),
+              child: Container(color: corVerdeClaroSecundAriaDaSenhoritaLuxoAcessorios,
+              child: const TelaImagemCardTop(),
+              ),
             ),
             const SizedBox(
               width: double.infinity,
