@@ -11,4 +11,8 @@ class Categoria {
       descricao: map['descricao'],
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {'descricao': descricao};
+  }
 }
