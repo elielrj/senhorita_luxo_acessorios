@@ -1,0 +1,1 @@
+const fundoTransparenteLetrasBrancas = 'imagens/sl-acessorios/fundo-transparente-letras-brancas.png';

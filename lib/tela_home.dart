@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:senhorita_luxo_acessorios/bibioteca/cores/cores.dart';
+import 'package:senhorita_luxo_acessorios/bibioteca/imagens.dart';
 import 'package:senhorita_luxo_acessorios/bibioteca/textos/textos.dart';
 import 'package:senhorita_luxo_acessorios/model/bo/produto/Categoria.dart';
 import 'package:senhorita_luxo_acessorios/tela_adicionar_produto.dart';
@@ -42,48 +43,68 @@ class _TelaHomeState extends State<TelaHome> {
     return Scaffold(
       backgroundColor: corRosaPrincipalDaSenhoritaLuxoAcessorios,
       appBar: AppBar(
-        title: Row(
-          children: [
-            const Text(
-              textoSenhoritaLuxoAcessorios,
-              style: TextStyle(
-                  color: corVerdeClaroSecundAriaDaSenhoritaLuxoAcessorios),
-            ),
-            kIsWeb
-                ? Row(
-                    children: [
-                      const SizedBox(
-                        width: 32,
-                      ),
-                      for (Categoria categoria in _listaDeCategorias)
-                        Padding(
-                          padding: const EdgeInsets.only(left: 16),
-                          child: TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              categoria.descricao.toString(),
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
+        title: Padding(
+          padding: const EdgeInsets.only(right: 8, left: 8),
+          child: Row(
+            mainAxisAlignment:
+                kIsWeb ? MainAxisAlignment.start : MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(
+                fundoTransparenteLetrasBrancas,
+                height: 70,
+                width: 60,
+              ),
+              const Text(
+                textoSenhoritaLuxoAcessorios,
+                style: TextStyle(
+                    color: corVerdeClaroSecundAriaDaSenhoritaLuxoAcessorios,
+                  fontSize: 20
+                ),
+              ),
+              kIsWeb
+                  ? Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            width: 32,
+                          ),
+                          for (Categoria categoria in _listaDeCategorias)
+                            Padding(
+                              padding: const EdgeInsets.only(left: 16),
+                              child: TextButton(
+                                onPressed: () {},
+                                child: Text(
+                                  categoria.descricao.toString(),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                    ],
-                  )
-                : Container(width: 0)
-          ],
+                        ],
+                      ),
+                    )
+                  : Container(width: 0),
+            ],
+          ),
         ),
-        leading: Builder(builder: (context) {
-          return IconButton(
-            icon: const Icon(
-              Icons.menu,
-              color: corVerdeClaroSecundAriaDaSenhoritaLuxoAcessorios,
-            ),
-            onPressed: () => Scaffold.of(context).openDrawer(),
-            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-          );
-        }),
+        leading: kIsWeb
+            ? Container()
+            : Builder(builder: (context) {
+                return IconButton(
+                  icon: const Icon(
+                    Icons.menu,
+                    color: corVerdeClaroSecundAriaDaSenhoritaLuxoAcessorios,
+                  ),
+                  onPressed: () => Scaffold.of(context).openDrawer(),
+                  tooltip:
+                      MaterialLocalizations.of(context).openAppDrawerTooltip,
+                );
+              }),
         actions: [
           IconButton(
             icon: const Icon(
@@ -96,17 +117,19 @@ class _TelaHomeState extends State<TelaHome> {
                   const SnackBar(content: Text(textoMeuCarrinho)));
             },
           ),
-          IconButton(
-            icon: const Icon(
-              Icons.settings,
-              color: corVerdeClaroSecundAriaDaSenhoritaLuxoAcessorios,
-            ),
-            tooltip: textoConfiguracoes,
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text(textoConfiguracoes)));
-            },
-          ),
+          kIsWeb
+              ? IconButton(
+                  icon: const Icon(
+                    Icons.settings,
+                    color: corVerdeClaroSecundAriaDaSenhoritaLuxoAcessorios,
+                  ),
+                  tooltip: textoConfiguracoes,
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text(textoConfiguracoes)));
+                  },
+                )
+              : const SizedBox(),
         ],
         backgroundColor: corRosaPrincipalDaSenhoritaLuxoAcessorios,
       ),
@@ -136,63 +159,67 @@ class _TelaHomeState extends State<TelaHome> {
           ],
         ),
       ),
-      drawer: Drawer(
-        backgroundColor: corVerdeClaroSecundAriaDaSenhoritaLuxoAcessorios,
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: corRosaPrincipalDaSenhoritaLuxoAcessorios,
-              ),
-              child: Text(textoCategorias),
-            ),
-            ListTile(
-              title: const Column(
+      drawer: kIsWeb
+          ? const SizedBox()
+          : Drawer(
+              backgroundColor: corVerdeClaroSecundAriaDaSenhoritaLuxoAcessorios,
+              child: ListView(
+                padding: EdgeInsets.zero,
                 children: [
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  const DrawerHeader(
+                    decoration: BoxDecoration(
+                      color: corRosaPrincipalDaSenhoritaLuxoAcessorios,
+                    ),
+                    child: Text(textoCategorias),
+                  ),
+                  ListTile(
+                    title: const Column(
                       children: [
-                        Icon(Icons.add, color: Colors.black),
-                        Text(
-                          textoProduto,
-                          style: TextStyle(color: Colors.black, fontSize: 16),
-                        ),
-                      ]),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(Icons.add, color: Colors.black),
+                              Text(
+                                textoProduto,
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 16),
+                              ),
+                            ]),
+                      ],
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const TelaAdicionarProduto()));
+                    },
+                  ),
+                  for (Categoria categoria in _listaDeCategorias)
+                    ListTile(
+                      title: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 16),
+                            child: Text(
+                              categoria.descricao.toString(),
+                              textAlign: TextAlign.start,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      onTap: () {},
+                    )
                 ],
               ),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const TelaAdicionarProduto()));
-              },
             ),
-            for (Categoria categoria in _listaDeCategorias)
-              ListTile(
-                title: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16),
-                      child: Text(
-                        categoria.descricao.toString(),
-                        textAlign: TextAlign.start,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                onTap: () {},
-              )
-          ],
-        ),
-      ),
     );
   }
 }
