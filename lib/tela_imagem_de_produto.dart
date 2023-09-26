@@ -4,7 +4,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 class TelaImagemDeProduto extends StatefulWidget {
-  const TelaImagemDeProduto({super.key, required this.codigo, required this.nome});
+  const TelaImagemDeProduto(
+      {super.key, required this.codigo, required this.nome});
 
   final String codigo;
   final String nome;
@@ -42,7 +43,6 @@ class _TelaImagemDeProdutoState extends State<TelaImagemDeProduto> {
         ? Container(
             color: Colors.grey,
           )
-        //: Image.network(imagemUrl!);
         : Image.network(imagemUrl!);
   }
 }
