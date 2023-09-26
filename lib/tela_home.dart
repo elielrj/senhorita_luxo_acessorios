@@ -53,13 +53,13 @@ class _TelaHomeState extends State<TelaHome> {
               Image.asset(
                 fundoTransparenteLetrasBrancas,
                 height: 70,
-                width: 60,
+                width: 50,
               ),
               const Text(
                 textoSenhoritaLuxoAcessorios,
                 style: TextStyle(
                     color: corVerdeClaroSecundAriaDaSenhoritaLuxoAcessorios,
-                  fontSize: 20
+                  fontSize: 16
                 ),
               ),
               kIsWeb
