@@ -332,7 +332,10 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                               textStyle: const TextStyle(fontSize: 20),
                             ),
                             onPressed: () async {
-                              try {} catch (e) {}
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const TelaHome()));
                             },
                             child: const Text(textoCancelar)),
                       ),
