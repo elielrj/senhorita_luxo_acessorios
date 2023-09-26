@@ -15,8 +15,10 @@ const textpQuantidade = 'Quantidade';
 const textoConfiguracoes = 'Configurações';
 const textoMeuCarrinho = 'Meu Carrinho';
 const textoProduto = 'Produto';
+const textoCategoria = 'Categoria';
 
 const textoAdicionarProduto = 'Adicionar Produto';
+const textoAdicionarCategoria = 'Adicionar Categoria';
 
 const textoCategorias = 'CATEGORIAS';
 
