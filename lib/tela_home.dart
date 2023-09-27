@@ -5,7 +5,9 @@ import 'package:senhorita_luxo_acessorios/bibioteca/cores/cores.dart';
 import 'package:senhorita_luxo_acessorios/bibioteca/imagens.dart';
 import 'package:senhorita_luxo_acessorios/bibioteca/textos/textos.dart';
 import 'package:senhorita_luxo_acessorios/model/bo/produto/Categoria.dart';
+import 'package:senhorita_luxo_acessorios/model/bo/produto/Departamento.dart';
 import 'package:senhorita_luxo_acessorios/tela_adicionar_categoria.dart';
+import 'package:senhorita_luxo_acessorios/tela_adicionar_departamento.dart';
 import 'package:senhorita_luxo_acessorios/tela_adicionar_produto.dart';
 import 'package:senhorita_luxo_acessorios/tela_de_produtos.dart';
 import 'package:senhorita_luxo_acessorios/tela_imagem_card_top.dart';
@@ -19,6 +21,7 @@ class TelaHome extends StatefulWidget {
 
 class _TelaHomeState extends State<TelaHome> {
   final _listaDeCategorias = <Categoria>[];
+  final _listaDeDepartamentos = <Departamento>[];
 
   Future<void> _buscarCategorias() async {
     await FirebaseFirestore.instance
@@ -33,10 +36,24 @@ class _TelaHomeState extends State<TelaHome> {
     setState(() => _listaDeCategorias);
   }
 
+  Future<void> _buscarDepartamentos() async {
+    await FirebaseFirestore.instance
+        .collection('departamentos')
+        .get()
+        .then((QuerySnapshot querySnapshot) async {
+      for (QueryDocumentSnapshot query in querySnapshot.docs) {
+        final data = query.data() as Map<String, dynamic>;
+        _listaDeDepartamentos.add(Departamento.fromMap(data));
+      }
+    });
+    setState(() => _listaDeDepartamentos);
+  }
+
   @override
   void initState() {
     super.initState();
     _buscarCategorias();
+    _buscarDepartamentos();
   }
 
   @override
@@ -65,19 +82,20 @@ class _TelaHomeState extends State<TelaHome> {
               kIsWeb
                   ? Expanded(
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           const SizedBox(
                             width: 32,
                           ),
-                          for (Categoria categoria in _listaDeCategorias)
+                          for (Departamento departamento
+                              in _listaDeDepartamentos)
                             Padding(
                               padding: const EdgeInsets.only(left: 16),
                               child: TextButton(
                                 onPressed: () {},
                                 child: Text(
-                                  categoria.descricao.toString(),
+                                  departamento.nome.toString(),
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
@@ -211,7 +229,30 @@ class _TelaHomeState extends State<TelaHome> {
                         builder: (context) => const TelaAdicionarCategoria()));
               },
             ),
-            for (Categoria categoria in _listaDeCategorias)
+            ListTile(
+              title: const Column(
+                children: [
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(Icons.add, color: Colors.black),
+                        Text(
+                          textoDepartamento,
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        ),
+                      ]),
+                ],
+              ),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const TelaAdicionarDepartamento()));
+              },
+            ),
+            for (Departamento departamento in _listaDeDepartamentos)
               ListTile(
                 title: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -220,7 +261,7 @@ class _TelaHomeState extends State<TelaHome> {
                     Padding(
                       padding: const EdgeInsets.only(top: 16),
                       child: Text(
-                        categoria.descricao.toString(),
+                        departamento.nome.toString(),
                         textAlign: TextAlign.start,
                         style: const TextStyle(
                           fontSize: 16,
