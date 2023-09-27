@@ -16,9 +16,11 @@ const textoConfiguracoes = 'Configurações';
 const textoMeuCarrinho = 'Meu Carrinho';
 const textoProduto = 'Produto';
 const textoCategoria = 'Categoria';
+const textoDepartamento = 'Departamento';
 
 const textoAdicionarProduto = 'Adicionar Produto';
 const textoAdicionarCategoria = 'Adicionar Categoria';
+const textoAdicionarDepartamento = 'Adicionar Departamento';
 
 const textoCategorias = 'CATEGORIAS';
 
