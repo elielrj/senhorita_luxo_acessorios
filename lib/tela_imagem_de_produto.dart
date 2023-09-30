@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 
 class TelaImagemDeProduto extends StatefulWidget {
   const TelaImagemDeProduto(
-      {super.key, required this.codigo, required this.nome});
+      {super.key, required this.id, required this.nomeDoArquivo});
 
-  final String codigo;
-  final String nome;
+  final int id;
+  final String nomeDoArquivo;
 
   @override
   State<TelaImagemDeProduto> createState() => _TelaImagemDeProdutoState();
@@ -21,8 +21,8 @@ class _TelaImagemDeProdutoState extends State<TelaImagemDeProduto> {
     String url = await FirebaseStorage.instance
         .ref()
         .child('produtos')
-        .child(widget.codigo)
-        .child('${widget.nome}.png')
+        .child(widget.id.toString())
+        .child('${widget.nomeDoArquivo}.png')
         .getDownloadURL();
 
     debugPrint('URL: $url');

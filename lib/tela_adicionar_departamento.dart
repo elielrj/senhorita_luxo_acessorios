@@ -5,7 +5,6 @@ import 'package:senhorita_luxo_acessorios/bibioteca/cores/cores.dart';
 import 'package:senhorita_luxo_acessorios/bibioteca/textos/textos.dart';
 import 'package:senhorita_luxo_acessorios/model/bo/produto/Departamento.dart';
 import 'package:senhorita_luxo_acessorios/tela_home.dart';
-import 'package:diacritic/diacritic.dart';
 
 class TelaAdicionarDepartamento extends StatefulWidget {
   const TelaAdicionarDepartamento({super.key});
@@ -65,11 +64,17 @@ class _TelaAdicionarDepartamentoState extends State<TelaAdicionarDepartamento> {
                             try {
                               await FirebaseFirestore.instance
                                   .collection('departamentos')
-                                  .doc(
-                                      //removerdor de caracter acentuado
-                                      removeDiacritics(_controller.text
-                                          .toString()
-                                          .toLowerCase()))
+                                  .count()
+                                  .get()
+                                  .then((AggregateQuerySnapshot
+                                      aggregateQuerySnapshot) {
+                                int quantidade = aggregateQuerySnapshot.count;
+                                departamento.id = ++quantidade;
+                              });
+
+                              await FirebaseFirestore.instance
+                                  .collection('departamentos')
+                                  .doc(departamento.id.toString())
                                   .set(departamento.toMap())
                                   .onError((error, _) => debugPrint(
                                       'Erro ao gravar um departamento: $error'))

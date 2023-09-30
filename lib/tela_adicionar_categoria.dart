@@ -58,13 +58,22 @@ class _TelaAdicionarCategoriaState extends State<TelaAdicionarCategoria> {
                             textStyle: const TextStyle(fontSize: 20),
                           ),
                           onPressed: () async {
-                            final categoria =
-                                Categoria(descricao: _controller.text);
+                            final categoria = Categoria(nome: _controller.text);
+
+                            await FirebaseFirestore.instance
+                                .collection('categorias')
+                                .count()
+                                .get()
+                                .then((AggregateQuerySnapshot
+                                    aggregateQuerySnapshot) {
+                              int quantidade = aggregateQuerySnapshot.count;
+                              categoria.id = ++quantidade;
+                            });
 
                             try {
                               await FirebaseFirestore.instance
                                   .collection('categorias')
-                                  .doc(_controller.text.toString().toLowerCase())
+                                  .doc(categoria.id.toString())
                                   .set(categoria.toMap())
                                   .onError((error, _) => debugPrint(
                                       'Erro ao gravar uma categoria: $error'))

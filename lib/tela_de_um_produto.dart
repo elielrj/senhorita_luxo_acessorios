@@ -42,8 +42,11 @@ class _TelaDeUmProdutoState extends State<TelaDeUmProduto> {
                     PageView(
                       controller: _controller,
                       children: [
-                        for (String nome in widget.produto.listaDeArquivos!)
-                          TelaImagemDeProduto(codigo: widget.produto.codigo!, nome: nome)
+                        for (String nomeDoArquivo
+                            in widget.produto.listaDeArquivos!)
+                          TelaImagemDeProduto(
+                              id: widget.produto.id!,
+                              nomeDoArquivo: nomeDoArquivo)
                       ],
                     ),
                     Container(

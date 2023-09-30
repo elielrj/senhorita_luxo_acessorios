@@ -7,6 +7,7 @@ import 'Estoque.dart';
 import 'Visualizacao.dart';
 
 class Produto {
+  late int? id;
   final String? codigo;
   final Estoque? estoque;
   final String? nome;
@@ -17,6 +18,7 @@ class Produto {
   final List<Visualizacao>? listaDeVisualizacoes;
 
   Produto({
+    this.id,
     this.codigo,
     this.estoque,
     this.nome,
@@ -29,6 +31,7 @@ class Produto {
 
   factory Produto.fromMap(Map<String, dynamic>? map) {
     return Produto(
+      id: map?['id'],
       codigo: map?['codigo'],
       estoque: map?['estoque'] is Map ? Estoque.fromMap(map?['estoque']) : null,
       nome: map?['nome'],
@@ -44,12 +47,18 @@ class Produto {
 
   Map<String, dynamic> toFirestore() {
     return {
+      'id': id,
       'nome': nome,
       'codigo': codigo,
       'estoque': estoque?.toFirestore(),
       'lista_de_arquivos': listaDeArquivos,
       //'lista_de_avaliacoes': listaDeAvaliacoes,
-      //'lista_de_categorias': listaDeCategorias,
+      'lista_de_categorias': listaDeCategorias
+          ?.map((Categoria categoria) => FirebaseFirestore.instance
+              .collection('categorias')
+              .doc(categoria.id.toString()))
+          .toList()
+          .cast(),
       //'lista_de_curtidas': listaDeCurtidas,
       //'lista_de_visualizacoes': listaDeVisualizacoes,
     };

@@ -1,6 +1,5 @@
-import 'dart:convert';
 import 'dart:io';
-import 'package:firebase_core/firebase_core.dart';
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
@@ -9,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:senhorita_luxo_acessorios/bibioteca/cores/cores.dart';
 import 'package:senhorita_luxo_acessorios/bibioteca/textos/textos.dart';
+import 'package:senhorita_luxo_acessorios/model/bo/produto/Categoria.dart';
 import 'package:senhorita_luxo_acessorios/model/bo/produto/Estoque.dart';
 import 'package:senhorita_luxo_acessorios/model/bo/produto/Produto.dart';
 import 'package:senhorita_luxo_acessorios/tela_home.dart';
@@ -22,13 +22,39 @@ class TelaAdicionarProduto extends StatefulWidget {
 
 class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
   final _controllerNome = TextEditingController();
-  final _controllerCodigo = TextEditingController(
-      text: Timestamp.now().microsecondsSinceEpoch.toString());
+  final _controllerCodigo =
+      TextEditingController(text: Random().nextInt(100000).toString());
   final _controllerEstoqueQuantidade = TextEditingController();
   final _controllerEstoqueValorDeAquisicao = TextEditingController();
   final _controllerEstoqueValorDeVenda = TextEditingController();
   final _imagensDoProduto = <XFile>[];
   String _erroAoBuscarImagem = '';
+  final _listaDeCategorias = <Categoria>[];
+  final _listaDeCategoriasSelecionadas = <bool>[];
+  Categoria? _dropdownValueCategoria;
+
+  Future<void> _buscarCategorias() async {
+    await FirebaseFirestore.instance
+        .collection('categorias')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      for (QueryDocumentSnapshot queryDocumentSnapshot in querySnapshot.docs) {
+        final data = queryDocumentSnapshot.data() as Map<String, dynamic>;
+        _listaDeCategorias.add(Categoria.fromMap(data));
+        _listaDeCategoriasSelecionadas.add(false);
+      }
+    });
+    setState(() {
+      _dropdownValueCategoria = _listaDeCategorias.first;
+      _listaDeCategorias;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _buscarCategorias();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +149,51 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                 ),
               ),
             ),
-            //06 - Capturas de Imagens
+            // 06 - Categoria do produto
+            Column(
+              children: [
+                const Text(
+                  textoCategoria,
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+                _listaDeCategorias.isEmpty
+                    ? const SizedBox(width: 0)
+                    : Padding(
+                        padding: const EdgeInsets.only(left: 8, right: 8),
+                        child: Container(
+                          color:
+                              corVerdeClaroSecundAriaDaSenhoritaLuxoAcessorios,
+                          child: Column(
+                            children: [
+                              for (int index = 0;
+                                  index < _listaDeCategorias.length;
+                                  index++)
+                                Row(
+                                  children: [
+                                    Checkbox(
+                                      value:
+                                          _listaDeCategoriasSelecionadas[index],
+                                      onChanged: (bool? value) {
+                                        if (value is bool) {
+                                          setState(() {
+                                            _listaDeCategoriasSelecionadas[
+                                                index] = value;
+                                          });
+                                        }
+                                      },
+                                    ),
+                                    Text(_listaDeCategorias[index].nome!),
+                                  ],
+                                ),
+                            ],
+                          ),
+                        ),
+                      ),
+              ],
+            ),
+            //08 - Capturas de Imagens
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -255,6 +325,17 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                               textStyle: const TextStyle(fontSize: 20),
                             ),
                             onPressed: () async {
+                              final listaDeCategorias = <Categoria>[];
+
+                              for (int index = 0;
+                                  index < listaDeCategorias.length;
+                                  index++) {
+                                if (_listaDeCategoriasSelecionadas[index]) {
+                                  listaDeCategorias
+                                      .add(_listaDeCategorias[index]);
+                                }
+                              }
+
                               final produto = Produto(
                                 nome: _controllerNome.text,
                                 codigo: _controllerCodigo.text,
@@ -273,24 +354,36 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                                               .toString()) ??
                                       0,
                                 ),
+                                listaDeCategorias: listaDeCategorias,
                               );
 
                               final listaDeStringsComNomesDosArquivos =
                                   <String>[];
 
                               try {
-                                for (XFile xFile in _imagensDoProduto) {
-                                  String nome = Timestamp.now()
-                                      .microsecondsSinceEpoch
-                                      .toString();
+                                await FirebaseFirestore.instance
+                                    .collection('produtos')
+                                    .count()
+                                    .get()
+                                    .then((AggregateQuerySnapshot
+                                        aggregateQuerySnapshot) {
+                                  int quantidade = aggregateQuerySnapshot.count;
+                                  produto.id = ++quantidade;
+                                });
 
-                                  listaDeStringsComNomesDosArquivos.add(nome);
+                                int countImagens = 0;
+
+                                for (XFile xFile in _imagensDoProduto) {
+                                  countImagens++;
+
+                                  listaDeStringsComNomesDosArquivos
+                                      .add(countImagens.toString());
 
                                   final storegeRef = FirebaseStorage.instance
                                       .ref()
                                       .child('produtos')
-                                      .child(produto.codigo.toString())
-                                      .child('$nome.png');
+                                      .child(produto.id.toString())
+                                      .child('${countImagens.toString()}.png');
 
                                   kIsWeb
                                       ? await storegeRef
@@ -303,10 +396,10 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                                     listaDeStringsComNomesDosArquivos;
                                 await FirebaseFirestore.instance
                                     .collection('produtos')
-                                    .doc(produto.codigo)
+                                    .doc(produto.id.toString())
                                     .set(produto.toFirestore())
                                     .onError((error, _) => debugPrint(
-                                        'Error writing document Produto: $error'))
+                                        'Erro ao criar Produto: $error'))
                                     .then((value) =>
                                         debugPrint('Sucesso ao enviar dados!'));
                                 // ignore: use_build_context_synchronously
