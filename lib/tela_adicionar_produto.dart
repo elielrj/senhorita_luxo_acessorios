@@ -328,7 +328,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                               final listaDeCategorias = <Categoria>[];
 
                               for (int index = 0;
-                                  index < listaDeCategorias.length;
+                                  index < _listaDeCategorias.length;
                                   index++) {
                                 if (_listaDeCategoriasSelecionadas[index]) {
                                   listaDeCategorias
